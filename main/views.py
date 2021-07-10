@@ -63,6 +63,7 @@ class PackagesList(APIView):
             #Get user info according to the creator id end
 
             items.append(field)
+        context["message"] = "ok"
         context["packages"] = items
         return Response(context)
 

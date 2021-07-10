@@ -16,6 +16,7 @@ class QuestionPackage(models.Model):
     creator = models.ForeignKey("auth.User", on_delete = models.CASCADE)
     show_in_page = models.BooleanField(default = False)
     played = models.IntegerField(default = 0)
+    image = models.ImageField(null = True)
 
     def __str__(self):
         return self.name
