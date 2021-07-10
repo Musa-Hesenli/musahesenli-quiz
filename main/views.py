@@ -44,7 +44,7 @@ class PackagesList(APIView):
             field["name"] = response["name"]
             field["description"] = response["description"]
             field["played"] = response["played"]
-
+            field["image"] = response["image"]
             # Get category info according to category id begin
 
             category_id = response["category"]
