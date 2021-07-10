@@ -7,3 +7,4 @@ httplib2==0.14.0
 whitenoise==5.0.1
 sqlparse==0.3.0
 asgiref==3.2.3
+django-cors-headers==3.7.0
