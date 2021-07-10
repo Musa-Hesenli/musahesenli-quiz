@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_jwt',
-    'corsheaders'
 ]
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'main.utils.jwt_response_payload_handler',
@@ -59,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
     'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
@@ -94,13 +92,6 @@ DATABASES = {
     }
 }
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8080'
-]
-CORS_ORIGIN_REGEX_WHITELIST = [
-    'http://localhost:8080',
-]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
