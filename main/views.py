@@ -119,7 +119,7 @@ class PackageDetails(APIView):
         serializer = QuestionPackage(package_info)
         package_id = serializer.data["id"]
         context = {}
-        context["package"] = serializer.data
+        context["packageInfo"] = serializer.data
         questions = self.get_questions(package_id)
         context["questions"] = self.json_to_queryset(questions)
         return Response(context)
