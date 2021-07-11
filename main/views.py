@@ -32,7 +32,7 @@ class CategoryList(APIView):
 
 class PackagesList(APIView):
     def get(self, request, format = None):
-        packages = models.QuestionPackage.objects.all()
+        packages = models.QuestionPackage.objects.filter(show_in_page = True)
         serializer = QuestionPackage(packages, many = True)
         context = dict()
         items = []
