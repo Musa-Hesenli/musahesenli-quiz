@@ -43,4 +43,11 @@ class Answers(models.Model):
 class CustomerCreatedQuiz(models.Model):
     text = models.TextField()
     is_looked_at = models.BooleanField()
-    
+
+
+class Rank(models.Model):
+    user = models.OneToOneField("auth.User", on_delete = models.CASCADE)
+    total_point = models.DecimalField(max_digits = 1000000000, decimal_places = 2)
+
+    def __str__(self):
+        return self.user.username + ": " + str(self.total_point)

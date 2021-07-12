@@ -10,7 +10,8 @@ urlpatterns = [
     path("packages", views.PackagesList.as_view()),
     path("created-quizess", views.CustomerCreatedQuizList.as_view()),
     path("packages/<int:pk>", views.PackageDetails.as_view()),
-
+    path("ranks", views.RankList.as_view()),
+    path("ranks/<int:pk>", views.RankDetails.as_view()),
     path(r'auth/obtain_token/', obtain_jwt_token),
     path(r'auth/refresh_token/', refresh_jwt_token)
     

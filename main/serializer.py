@@ -33,3 +33,10 @@ class CustomerCreatedQuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomerCreatedQuiz
         fields = '__all__'        
+
+
+class RankListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Rank
+        fields = '__all__'        
+        

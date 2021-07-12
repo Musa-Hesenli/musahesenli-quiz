@@ -5,11 +5,13 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework import status
-from .serializer import Categories, QuestionPackage, Options, Question, Users, CustomerCreatedQuizSerializer
+from .serializer import Categories, QuestionPackage, Options, Question, Users, CustomerCreatedQuizSerializer, RankListSerializer
 from rest_framework import permissions, authentication
 from . import models
 from django.contrib.auth.models import User
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
+from main import serializer
 
 def home(request):
     return HttpResponse("Hello world")
@@ -194,4 +196,56 @@ class CustomerCreatedQuizList(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)   
+
+
+class RankList(APIView):
+
+    def get_user_data(self, id):
+        try:
+            return User.objects.get(id = id)
+        except User.DoesNotExist:
+            raise Http404    
+
+    def get(self, request):
+        context = {}
+        user_list = []
+        data = models.Rank.objects.all()
+        serializer = RankListSerializer(data, many = True)
+        for i in serializer.data:
+            rank_dict = {}
+            user = self.get_user_data(dict(i)["user"])
+            rank_dict["id"] = dict(i).get("id")
+            rank_dict["total_point"] = dict(i).get("total_point")
+            rank_dict["user"] = user.username
+            user_list.append(rank_dict)
+        print(user_list)    
+        context["ranks"] = user_list    
+        return Response(context)
+
+    def post(self, request):
+        serializer = RankListSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"rank" : serializer.data}, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)  
+
+class RankDetails(APIView):
+    def get_object(self, pk):
+        try:
+            return models.Rank.objects.get(pk = pk)
+        except:
+            raise Http404
+
+    def get(self, request, pk):
+        rank = self.get_object(pk)
+        serializer = RankListSerializer(rank)
+        return Response({'rank' : serializer.data})
+
+    def put(self, request, pk):
+        rank = self.get_object(pk)
+        serializer = RankListSerializer(data = rank)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'rank' : serializer.data})
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)    
