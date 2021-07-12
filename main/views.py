@@ -20,7 +20,7 @@ class CategoryList(APIView):
         category_list = models.Category.objects.all().order_by("name")
         serializer = Categories(category_list, many = True)
 
-        return Response([{ "packages" : serializer.data }])
+        return Response({ "packages" : serializer.data })
 
     def post(self, request, format = None):
         serializer = Categories(data=request.data)
