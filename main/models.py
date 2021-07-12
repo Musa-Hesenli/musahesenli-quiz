@@ -3,6 +3,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(verbose_name = "Category name", max_length = 30)
+    image = models.ImageField(null = True)
     def __str__(self):
         return self.name
 
