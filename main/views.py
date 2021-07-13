@@ -1,3 +1,4 @@
+import re
 from django.http import HttpResponse
 from django.http import response
 from django.http.response import Http404
@@ -119,6 +120,8 @@ class PackageDetails(APIView):
 
     def get(self, request, pk, format = None):
         package_info = self.get_object(pk)
+        package_info.played = package_info.played + 1
+        package_info.save()
         serializer = QuestionPackage(package_info)
         package_id = serializer.data["id"]
         context = {}
@@ -126,6 +129,7 @@ class PackageDetails(APIView):
         questions = self.get_questions(package_id)
         context["questions"] = self.json_to_queryset(questions)
         return Response(context)
+
 
 
     def put(self, request, pk):
