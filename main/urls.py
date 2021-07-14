@@ -13,6 +13,5 @@ urlpatterns = [
     path("ranks", views.RankList.as_view()),
     path("ranks/<int:pk>", views.RankDetails.as_view()),
     path(r'auth/obtain_token/', obtain_jwt_token),
-    path(r'auth/refresh_token/', refresh_jwt_token)
-    
+    path(r'auth/refresh_token/', refresh_jwt_token),    
 ]

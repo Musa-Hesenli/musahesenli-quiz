@@ -35,8 +35,17 @@ class CategoryList(APIView):
 
 
 class PackagesList(APIView):
+    def get_package_related_to_category(self, category_id):
+        return models.QuestionPackage.objects.filter(category = category_id, show_in_page = True)
+
+    def get_all_showing_packages(self):
+        return models.QuestionPackage.objects.filter(show_in_page = True)
+
     def get(self, request, format = None):
-        packages = models.QuestionPackage.objects.filter(show_in_page = True)
+        if request.GET.get("category") is not None:
+            packages = self.get_package_related_to_category(request.GET["category"])
+        else:
+            packages = self.get_all_showing_packages()    
         serializer = QuestionPackage(packages, many = True)
         context = dict()
         items = []
